@@ -31,9 +31,6 @@ public class MagicManager : MonoBehaviour
         if (magicEffects.ContainsKey(letter))
         {
             GameObject effect = Instantiate(magicEffects[letter], player.position, Quaternion.identity);
-            Destroy(effect, 2f);
-
-
         }
     }
 

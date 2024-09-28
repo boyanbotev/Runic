@@ -48,6 +48,12 @@ public class EnemyController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     {
         var player = target.gameObject;
+        var expand = collider.gameObject.GetComponent<Expand>();
+
+        if (expand)
+        {
+            Destroy(gameObject);
+        }
 
         if (collider.gameObject == player)
         {

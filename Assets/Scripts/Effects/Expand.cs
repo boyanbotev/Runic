@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class Expand : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        StartCoroutine(DestroyRoutine());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator DestroyRoutine()
     {
-        
+        yield return new WaitForSeconds(1);
+        Destroy(gameObject);
     }
 }
