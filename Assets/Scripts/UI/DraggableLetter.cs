@@ -5,12 +5,22 @@ using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+public enum ButtonState
+{
+    Idle,
+    Pressed
+}
+
 public class DraggableLetter : VisualElement
 {
-    public static event Action<string> onSelect;
+    public static event Action<DraggableLetter> onSelect;
+    public static event Action<DraggableLetter> onRelease;
     public WritingLine line;
     public Vector2 originalPos;
     public string value;
+    public ButtonState state = ButtonState.Idle;
+
+
     private string draggableLetterClassName = "draggable-letter";
     private VisualElement bodyEl;
 
@@ -22,11 +32,23 @@ public class DraggableLetter : VisualElement
         var letterLabel = new Label(letter);
         Add(letterLabel);
         this.bodyEl = mainEl;
+
+        RegisterCallback<PointerDownEvent>(evt =>
+        {
+            onSelect?.Invoke(this);
+            state = ButtonState.Pressed;
+        });
+
+        RegisterCallback<PointerUpEvent>(evt =>
+        {
+            onRelease?.Invoke(this);
+            state = ButtonState.Idle;
+        });
     }
 
     public void Select()
     {
-        onSelect?.Invoke(value);
+        onSelect?.Invoke(this);
         CalculatePos();
     }
     private void CalculatePos()

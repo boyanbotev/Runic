@@ -49,7 +49,7 @@ public class EnemyController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     {
         var player = target.gameObject;
-        var effect = collider.gameObject.GetComponent<AttackEffect>();
+        var effect = collider.gameObject.GetComponentInParent<AttackEffect>();
 
         if (effect)
         {

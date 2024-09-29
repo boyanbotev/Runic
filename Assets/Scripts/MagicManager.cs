@@ -2,6 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class EffectData
+{
+    public GameObject effectPrefab;
+    public float holdButtonTime;
+
+    public EffectData(GameObject effectPrefab, float holdButtonTime)
+    {
+        this.effectPrefab = effectPrefab;
+        this.holdButtonTime = holdButtonTime;
+    }
+}
+
 public class MagicManager : MonoBehaviour
 {
     [SerializeField] Transform player;
@@ -12,17 +24,29 @@ public class MagicManager : MonoBehaviour
     [SerializeField] GameObject naudizPrefab;  // n
     [SerializeField] GameObject isazPrefab; // i
 
-    Dictionary<string, GameObject> magicEffects = new Dictionary<string, GameObject>();
+    Dictionary<string, EffectData> magicEffects = new Dictionary<string, EffectData>();
     [SerializeField] GameManager gameManager;
 
     private void Awake()
     {
-        magicEffects.Add("t", tiwazPrefab);
-        magicEffects.Add("a", ansuzPrefab);
-        magicEffects.Add("s", sowiloPrefab);
-        magicEffects.Add("p", perthroPrefab);
-        magicEffects.Add("n", naudizPrefab);
-        magicEffects.Add("i", isazPrefab);
+        magicEffects.Add("t", new EffectData(tiwazPrefab, 0.5f));
+        magicEffects.Add("a", new EffectData(ansuzPrefab, 1));
+        magicEffects.Add("s", new EffectData(sowiloPrefab, 1));
+        magicEffects.Add("p", new EffectData(perthroPrefab, 1));
+        magicEffects.Add("n", new EffectData(naudizPrefab, 1));
+        magicEffects.Add("i", new EffectData(isazPrefab, 1));
+    }
+
+    private void OnEnable()
+    {
+        DraggableLetter.onSelect += OnLetterSelect;
+        DraggableLetter.onRelease += CancelLetterHold;
+    }
+
+    private void OnDisable()
+    {
+        DraggableLetter.onSelect -= OnLetterSelect;
+        DraggableLetter.onRelease -= CancelLetterHold;
     }
 
     public void SpawnEffect(string letter)
@@ -31,7 +55,7 @@ public class MagicManager : MonoBehaviour
 
         if (magicEffects.ContainsKey(letter))
         {
-            GameObject effect = Instantiate(magicEffects[letter], player.position, Quaternion.identity);
+            GameObject effect = Instantiate(magicEffects[letter].effectPrefab, player.position, Quaternion.identity);
 
             if (letter == "t")
             {
@@ -67,6 +91,32 @@ public class MagicManager : MonoBehaviour
 
             return closestEnemy;
         }
+    }
+
+    public IEnumerator HoldButtonRoutine(DraggableLetter draggableLetter)
+    {
+        EffectData effectData = magicEffects[draggableLetter.value];
+        Debug.Log("start coroutine");
+        yield return new WaitForSeconds(effectData.holdButtonTime);
+        Debug.Log("reach end of coroutine");
+
+        if (draggableLetter.state == ButtonState.Pressed)
+        {
+            SpawnEffect(draggableLetter.value);
+        }
+    }
+
+    void CancelLetterHold(DraggableLetter draggableLetter)
+    {
+        //StopCoroutine(HoldButtonRoutine(draggableLetter));
+        Debug.Log("cancel hold");
+        StopAllCoroutines();
+    }
+
+    void OnLetterSelect(DraggableLetter draggableLetter)
+    {
+        if (draggableLetter.state == ButtonState.Idle)
+            StartCoroutine(HoldButtonRoutine(draggableLetter));
     }
 
 
