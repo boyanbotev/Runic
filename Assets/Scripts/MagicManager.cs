@@ -6,11 +6,13 @@ public class EffectData
 {
     public GameObject effectPrefab;
     public float holdButtonTime;
+    public bool isFacingClosestEnemy;
 
-    public EffectData(GameObject effectPrefab, float holdButtonTime)
+    public EffectData(GameObject effectPrefab, float holdButtonTime, bool isFacingClosestEnemy)
     {
         this.effectPrefab = effectPrefab;
         this.holdButtonTime = holdButtonTime;
+        this.isFacingClosestEnemy = isFacingClosestEnemy;
     }
 }
 
@@ -29,12 +31,12 @@ public class MagicManager : MonoBehaviour
 
     private void Awake()
     {
-        magicEffects.Add("t", new EffectData(tiwazPrefab, 0.5f));
-        magicEffects.Add("a", new EffectData(ansuzPrefab, 1));
-        magicEffects.Add("s", new EffectData(sowiloPrefab, 1));
-        magicEffects.Add("p", new EffectData(perthroPrefab, 1));
-        magicEffects.Add("n", new EffectData(naudizPrefab, 1));
-        magicEffects.Add("i", new EffectData(isazPrefab, 1));
+        magicEffects.Add("t", new EffectData(tiwazPrefab, 0.5f, true));
+        magicEffects.Add("a", new EffectData(ansuzPrefab, 1, false));
+        magicEffects.Add("s", new EffectData(sowiloPrefab, 1, false));
+        magicEffects.Add("p", new EffectData(perthroPrefab, 0.1f, true));
+        magicEffects.Add("n", new EffectData(naudizPrefab, 1, false));
+        magicEffects.Add("i", new EffectData(isazPrefab, 1, true));
     }
 
     private void OnEnable()
@@ -55,14 +57,21 @@ public class MagicManager : MonoBehaviour
 
         if (magicEffects.ContainsKey(letter))
         {
-            GameObject effect = Instantiate(magicEffects[letter].effectPrefab, player.position, Quaternion.identity);
+            EffectData data = magicEffects[letter];
+            GameObject effect = Instantiate(data.effectPrefab, player.position, Quaternion.identity);
 
-            if (letter == "t")
+
+            if (data.isFacingClosestEnemy)
             {
                 if (gameManager.enemies.Count != 0)
                 {
                     FaceClosestEnemy(effect);
                 }
+            }
+
+            if (letter == "p")
+            {
+                //FaceRandomDirection(effect);
             }
         }
 
@@ -72,6 +81,12 @@ public class MagicManager : MonoBehaviour
             Vector3 dir = closestEnemyPos - player.position;
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             effect.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+        }
+
+        void FaceRandomDirection(GameObject effect)
+        {
+            float angle = Random.Range(0, 360);
+            effect.transform.rotation = Quaternion.Euler(0, 0, angle);
         }
 
         GameObject GetClosestEnemy()
@@ -123,7 +138,7 @@ public class MagicManager : MonoBehaviour
     // move towaz towards mouse quickly
 
 
-    // perthro: randomize the position of the effect
+    // perthro: randomize direction of effect
 
     // naudiz: slow down time
 

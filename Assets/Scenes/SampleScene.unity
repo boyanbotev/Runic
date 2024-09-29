@@ -552,7 +552,7 @@ MonoBehaviour:
   tiwazPrefab: {fileID: 3069076193822718064, guid: 6f4f87461591f624c89f897142c4f45f, type: 3}
   ansuzPrefab: {fileID: 8128013257767509212, guid: 2d9f7088ecdd58a4fb84cadf54ae588b, type: 3}
   sowiloPrefab: {fileID: 5679761190642041175, guid: ca5d577f90b658c4fb058e0864d38fe3, type: 3}
-  perthroPrefab: {fileID: 8128013257767509212, guid: 3e6c81912fdf17d4da7aa51d798cfc86, type: 3}
+  perthroPrefab: {fileID: 6164614806684692931, guid: a1d7aa8f4f25a45479b09cbdf39cb082, type: 3}
   naudizPrefab: {fileID: 8128013257767509212, guid: d1fd70228ca677e4fae50863771f3cf3, type: 3}
   isazPrefab: {fileID: 8128013257767509212, guid: cefbfa27d4a48474889df3b42f4778be, type: 3}
   gameManager: {fileID: 512974741}
