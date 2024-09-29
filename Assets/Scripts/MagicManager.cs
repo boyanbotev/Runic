@@ -7,12 +7,14 @@ public class EffectData
     public GameObject effectPrefab;
     public float holdButtonTime;
     public bool isFacingClosestEnemy;
+    public int spawnCount;
 
-    public EffectData(GameObject effectPrefab, float holdButtonTime, bool isFacingClosestEnemy)
+    public EffectData(GameObject effectPrefab, float holdButtonTime, bool isFacingClosestEnemy, int spawnCount)
     {
         this.effectPrefab = effectPrefab;
         this.holdButtonTime = holdButtonTime;
         this.isFacingClosestEnemy = isFacingClosestEnemy;
+        this.spawnCount = spawnCount;
     }
 }
 
@@ -31,12 +33,12 @@ public class MagicManager : MonoBehaviour
 
     private void Awake()
     {
-        magicEffects.Add("t", new EffectData(tiwazPrefab, 0.5f, true));
-        magicEffects.Add("a", new EffectData(ansuzPrefab, 1, false));
-        magicEffects.Add("s", new EffectData(sowiloPrefab, 1, false));
-        magicEffects.Add("p", new EffectData(perthroPrefab, 0.1f, true));
-        magicEffects.Add("n", new EffectData(naudizPrefab, 1, false));
-        magicEffects.Add("i", new EffectData(isazPrefab, 1, true));
+        magicEffects.Add("t", new EffectData(tiwazPrefab, 0.5f, true, 1));
+        magicEffects.Add("a", new EffectData(ansuzPrefab, 1, false, 1));
+        magicEffects.Add("s", new EffectData(sowiloPrefab, 1, false, 1));
+        magicEffects.Add("p", new EffectData(perthroPrefab, 0.3f, true, 3));
+        magicEffects.Add("n", new EffectData(naudizPrefab, 1, false, 1));
+        magicEffects.Add("i", new EffectData(isazPrefab, 1, true, 1));
     }
 
     private void OnEnable()
@@ -55,11 +57,20 @@ public class MagicManager : MonoBehaviour
     {
         // Spawn the correct effect based on the letter
 
+
         if (magicEffects.ContainsKey(letter))
         {
             EffectData data = magicEffects[letter];
-            GameObject effect = Instantiate(data.effectPrefab, player.position, Quaternion.identity);
 
+            for (int i = 0; i < data.spawnCount; i++)
+            {
+                SpawnEffectSingle(data);
+            }
+        }
+
+        void SpawnEffectSingle(EffectData data)
+        {
+            GameObject effect = Instantiate(data.effectPrefab, player.position, Quaternion.identity);
 
             if (data.isFacingClosestEnemy)
             {
@@ -67,11 +78,6 @@ public class MagicManager : MonoBehaviour
                 {
                     FaceClosestEnemy(effect);
                 }
-            }
-
-            if (letter == "p")
-            {
-                //FaceRandomDirection(effect);
             }
         }
 
@@ -81,12 +87,6 @@ public class MagicManager : MonoBehaviour
             Vector3 dir = closestEnemyPos - player.position;
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             effect.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
-        }
-
-        void FaceRandomDirection(GameObject effect)
-        {
-            float angle = Random.Range(0, 360);
-            effect.transform.rotation = Quaternion.Euler(0, 0, angle);
         }
 
         GameObject GetClosestEnemy()
