@@ -14,6 +14,7 @@ enum EnemyState
 public class EnemyController : MonoBehaviour
 {
     public static event Action onTouchPlayer;
+    public static event Action<GameObject> onDestroyed;
     public string word = string.Empty;
     public Transform target;
     [SerializeField] float minApproachDistance = 10;
@@ -48,10 +49,11 @@ public class EnemyController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     {
         var player = target.gameObject;
-        var expand = collider.gameObject.GetComponent<Expand>();
+        var effect = collider.gameObject.GetComponent<AttackEffect>();
 
-        if (expand)
+        if (effect)
         {
+            onDestroyed?.Invoke(gameObject);
             Destroy(gameObject);
         }
 

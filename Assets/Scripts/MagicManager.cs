@@ -13,6 +13,7 @@ public class MagicManager : MonoBehaviour
     [SerializeField] GameObject isazPrefab; // i
 
     Dictionary<string, GameObject> magicEffects = new Dictionary<string, GameObject>();
+    [SerializeField] GameManager gameManager;
 
     private void Awake()
     {
@@ -31,10 +32,44 @@ public class MagicManager : MonoBehaviour
         if (magicEffects.ContainsKey(letter))
         {
             GameObject effect = Instantiate(magicEffects[letter], player.position, Quaternion.identity);
+
+            if (letter == "t")
+            {
+                if (gameManager.enemies.Count != 0)
+                {
+                    FaceClosestEnemy(effect);
+                }
+            }
+        }
+
+        void FaceClosestEnemy(GameObject effect)
+        {
+            Vector3 closestEnemyPos = GetClosestEnemy().transform.position;
+            Vector3 dir = closestEnemyPos - player.position;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            effect.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+        }
+
+        GameObject GetClosestEnemy()
+        {
+            GameObject closestEnemy = null;
+            float closestDistance = float.MaxValue;
+
+            foreach (var enemy in gameManager.enemies)
+            {
+                float distance = Vector3.Distance(player.position, enemy.transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestEnemy = enemy;
+                }
+            }
+
+            return closestEnemy;
         }
     }
 
-    // TODO: rotate the tiwaz effect to face the mouse
+
     // move towaz towards mouse quickly
 
 
