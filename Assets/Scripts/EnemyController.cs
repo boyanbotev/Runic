@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 enum EnemyState
 {
     Chasing,
+    Frozen,
 }
 
 public class EnemyController : MonoBehaviour
@@ -23,11 +24,15 @@ public class EnemyController : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private float speed = 1f;
     [SerializeField] private TextMeshPro healthDisplay;
+    [SerializeField] private float freezeTime = 3f;
+    private Color originalColor;
+    private Color freezeColor = new Color(0.5f, 0.5f, 1f, 1f);
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         state = EnemyState.Chasing;
+        originalColor = GetComponent<SpriteRenderer>().color;
     }
 
     void FixedUpdate()
@@ -50,8 +55,16 @@ public class EnemyController : MonoBehaviour
     {
         var player = target.gameObject;
         var effect = collider.gameObject.GetComponentInParent<AttackEffect>();
+        var freeze = collider.gameObject.GetComponentInParent<Freeze>();
 
-        if (effect)
+        if (freeze)
+        {
+            Debug.Log("freeze");
+            state = EnemyState.Frozen;
+            GetComponent<SpriteRenderer>().color = freezeColor;
+            StartCoroutine(Unfreeze());
+        }
+        else if (effect)
         {
             onDestroyed?.Invoke(gameObject);
             Destroy(gameObject);
@@ -61,5 +74,12 @@ public class EnemyController : MonoBehaviour
         {
             onTouchPlayer?.Invoke();
         }
+    }
+
+    private IEnumerator Unfreeze()
+    {
+        yield return new WaitForSeconds(freezeTime);
+        state = EnemyState.Chasing;
+        GetComponent<SpriteRenderer>().color = originalColor;
     }
 }

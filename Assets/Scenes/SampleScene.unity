@@ -554,7 +554,7 @@ MonoBehaviour:
   sowiloPrefab: {fileID: 5679761190642041175, guid: ca5d577f90b658c4fb058e0864d38fe3, type: 3}
   perthroPrefab: {fileID: 6164614806684692931, guid: a1d7aa8f4f25a45479b09cbdf39cb082, type: 3}
   naudizPrefab: {fileID: 8128013257767509212, guid: d1fd70228ca677e4fae50863771f3cf3, type: 3}
-  isazPrefab: {fileID: 8128013257767509212, guid: cefbfa27d4a48474889df3b42f4778be, type: 3}
+  isazPrefab: {fileID: 5462901222406865590, guid: e4f9fb3c716c247459c1ff45bbbd916b, type: 3}
   gameManager: {fileID: 512974741}
 --- !u!4 &1084536409
 Transform:

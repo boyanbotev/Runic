@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class EffectData
 {
@@ -33,12 +34,12 @@ public class MagicManager : MonoBehaviour
 
     private void Awake()
     {
-        magicEffects.Add("t", new EffectData(tiwazPrefab, 0.5f, true, 1));
+        magicEffects.Add("t", new EffectData(tiwazPrefab, 0.7f, true, 1));
         magicEffects.Add("a", new EffectData(ansuzPrefab, 1, false, 1));
         magicEffects.Add("s", new EffectData(sowiloPrefab, 1, false, 1));
         magicEffects.Add("p", new EffectData(perthroPrefab, 0.3f, true, 3));
         magicEffects.Add("n", new EffectData(naudizPrefab, 1, false, 1));
-        magicEffects.Add("i", new EffectData(isazPrefab, 1, true, 1));
+        magicEffects.Add("i", new EffectData(isazPrefab, 0.4f, true, 1));
     }
 
     private void OnEnable()
