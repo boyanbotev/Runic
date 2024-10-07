@@ -5,6 +5,7 @@ using UnityEngine;
 public class AttackEffect : MonoBehaviour
 {
     public float duration = 1;
+    public float damage = 1;
     private void Start()
     {
         StartCoroutine(DestroyRoutine());

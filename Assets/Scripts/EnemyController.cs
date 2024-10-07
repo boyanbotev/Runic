@@ -23,8 +23,9 @@ public class EnemyController : MonoBehaviour
     private EnemyState state;
     private Rigidbody2D rb;
     [SerializeField] private float speed = 1f;
-    [SerializeField] private TextMeshPro healthDisplay;
+    [SerializeField] private float health = 7;
     [SerializeField] private float freezeTime = 3f;
+    private HealthBar healthBar;
     private Color originalColor;
     private Color freezeColor = new Color(0.5f, 0.5f, 1f, 1f);
 
@@ -33,6 +34,14 @@ public class EnemyController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         state = EnemyState.Chasing;
         originalColor = GetComponent<SpriteRenderer>().color;
+        healthBar = GetComponentInChildren<HealthBar>();
+
+    }
+
+    private void Start()
+    {
+        healthBar.maxHealth = health;
+        healthBar.UpdateHealth(health);
     }
 
     void FixedUpdate()
@@ -46,8 +55,6 @@ public class EnemyController : MonoBehaviour
     void MoveToTarget()
     {
         Vector2 moveDir = target.position - transform.position;
-        //rb.AddForce(moveDir.normalized * speed);
-        //rb.velocity = Vector2.ClampMagnitude(rb.velocity, speed);
         transform.Translate(moveDir.normalized * speed * Time.deltaTime);
     }
 
@@ -59,15 +66,16 @@ public class EnemyController : MonoBehaviour
 
         if (freeze)
         {
-            Debug.Log("freeze");
             state = EnemyState.Frozen;
             GetComponent<SpriteRenderer>().color = freezeColor;
-            StartCoroutine(Unfreeze());
+            StopCoroutine("Unfreeze");
+            StartCoroutine("Unfreeze");
+            TakeDamage(freeze.damage);
         }
         else if (effect)
         {
             onDestroyed?.Invoke(gameObject);
-            Destroy(gameObject);
+            TakeDamage(effect.damage);
         }
 
         if (collider.gameObject == player)
@@ -81,5 +89,17 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSeconds(freezeTime);
         state = EnemyState.Chasing;
         GetComponent<SpriteRenderer>().color = originalColor;
+    }
+
+    void TakeDamage(float damage)
+    {
+        health -= damage;
+        healthBar.UpdateHealth(health);
+
+        if (health <= 0)
+        {
+            onDestroyed?.Invoke(gameObject);
+            Destroy(gameObject);
+        }
     }
 }

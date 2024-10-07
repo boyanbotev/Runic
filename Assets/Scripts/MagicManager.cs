@@ -36,10 +36,10 @@ public class MagicManager : MonoBehaviour
     {
         magicEffects.Add("t", new EffectData(tiwazPrefab, 0.7f, true, 1));
         magicEffects.Add("a", new EffectData(ansuzPrefab, 1, false, 1));
-        magicEffects.Add("s", new EffectData(sowiloPrefab, 1, false, 1));
+        magicEffects.Add("s", new EffectData(sowiloPrefab, 0.5f, false, 1));
         magicEffects.Add("p", new EffectData(perthroPrefab, 0.3f, true, 3));
         magicEffects.Add("n", new EffectData(naudizPrefab, 1, false, 1));
-        magicEffects.Add("i", new EffectData(isazPrefab, 0.4f, true, 1));
+        magicEffects.Add("i", new EffectData(isazPrefab, 0.7f, true, 1));
     }
 
     private void OnEnable()
@@ -112,9 +112,7 @@ public class MagicManager : MonoBehaviour
     public IEnumerator HoldButtonRoutine(DraggableLetter draggableLetter)
     {
         EffectData effectData = magicEffects[draggableLetter.value];
-        Debug.Log("start coroutine");
         yield return new WaitForSeconds(effectData.holdButtonTime);
-        Debug.Log("reach end of coroutine");
 
         if (draggableLetter.state == ButtonState.Pressed)
         {
@@ -124,8 +122,6 @@ public class MagicManager : MonoBehaviour
 
     void CancelLetterHold(DraggableLetter draggableLetter)
     {
-        //StopCoroutine(HoldButtonRoutine(draggableLetter));
-        Debug.Log("cancel hold");
         StopAllCoroutines();
     }
 
@@ -134,14 +130,6 @@ public class MagicManager : MonoBehaviour
         if (draggableLetter.state == ButtonState.Idle)
             StartCoroutine(HoldButtonRoutine(draggableLetter));
     }
-
-
-    // move towaz towards mouse quickly
-
-
-    // perthro: randomize direction of effect
-
-    // naudiz: slow down time
 
     // isaz: freeze enemies
 

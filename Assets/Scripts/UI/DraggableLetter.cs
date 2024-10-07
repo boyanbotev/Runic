@@ -44,6 +44,12 @@ public class DraggableLetter : VisualElement
             onRelease?.Invoke(this);
             state = ButtonState.Idle;
         });
+
+        RegisterCallback<PointerLeaveEvent>(evt =>
+        {
+            onRelease?.Invoke(this);
+            state = ButtonState.Idle;
+        });
     }
 
     public void Select()

@@ -15,7 +15,6 @@ public class RandomAttack : AttackEffect
     void ChooseRandomAttack()
     {
         int randomAttack = Random.Range(0, 3);
-        Debug.Log("random attack" + randomAttack);
         switch (randomAttack)
         {
             case 0:
