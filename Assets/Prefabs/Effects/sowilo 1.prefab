@@ -45,9 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebdf02765a6978a4e840d9a18cd7db5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 0.9
+  duration: 0.3
   damage: 5
-  knockbackForce: 20
+  knockbackForce: 10
 --- !u!1001 &8396230771963880208
 PrefabInstance:
   m_ObjectHideFlags: 0
