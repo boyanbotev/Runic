@@ -10,6 +10,7 @@ enum EnemyState
 {
     Chasing,
     Frozen,
+    KnockedBack,
 }
 
 public class EnemyController : MonoBehaviour
@@ -28,6 +29,7 @@ public class EnemyController : MonoBehaviour
     private HealthBar healthBar;
     private Color originalColor;
     private Color freezeColor = new Color(0.5f, 0.5f, 1f, 1f);
+    private Vector2 knockBackVector;
 
     private void Awake()
     {
@@ -35,7 +37,6 @@ public class EnemyController : MonoBehaviour
         state = EnemyState.Chasing;
         originalColor = GetComponent<SpriteRenderer>().color;
         healthBar = GetComponentInChildren<HealthBar>();
-
     }
 
     private void Start()
@@ -50,12 +51,22 @@ public class EnemyController : MonoBehaviour
         {
             MoveToTarget();
         }
+        else if (state == EnemyState.KnockedBack)
+        {
+            MoveBack();
+        }
     }
 
     void MoveToTarget()
     {
         Vector2 moveDir = target.position - transform.position;
         transform.Translate(moveDir.normalized * speed * Time.deltaTime);
+    }
+
+    void MoveBack()
+    {
+        transform.Translate(knockBackVector * Time.deltaTime);
+        knockBackVector = Vector2.Lerp(knockBackVector, Vector2.zero, 0.1f);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -76,6 +87,14 @@ public class EnemyController : MonoBehaviour
         {
             onDestroyed?.Invoke(gameObject);
             TakeDamage(effect.damage);
+        }
+
+        if (effect?.knockbackForce > 0 && state == EnemyState.Chasing)
+        {
+            state = EnemyState.KnockedBack;
+            knockBackVector = (transform.position - effect.transform.position).normalized * effect.knockbackForce;
+            StopCoroutine("KnockBackRoutine");
+            StartCoroutine("KnockBackRoutine");
         }
 
         if (collider.gameObject == player)
@@ -101,5 +120,11 @@ public class EnemyController : MonoBehaviour
             onDestroyed?.Invoke(gameObject);
             Destroy(gameObject);
         }
+    }
+
+    IEnumerator KnockBackRoutine()
+    {
+        yield return new WaitForSeconds(0.2f);
+        state = EnemyState.Chasing;
     }
 }

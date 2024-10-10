@@ -6,6 +6,7 @@ public class AttackEffect : MonoBehaviour
 {
     public float duration = 1;
     public float damage = 1;
+    public float knockbackForce = 0;
     private void Start()
     {
         StartCoroutine(DestroyRoutine());
