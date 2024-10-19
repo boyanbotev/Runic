@@ -53,9 +53,9 @@ MonoBehaviour:
   target: {fileID: 0}
   minApproachDistance: 100
   minAttackDistance: 3
-  speed: 2
-  health: 7
-  freezeTime: 3
+  speed: 1
+  health: 22
+  freezeTime: 5
 --- !u!212 &1390007493924983252
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -240,7 +240,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1160030330760280240, guid: 13252f241628bb146a0a6e0fd9aced86, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1160030330760280240, guid: 13252f241628bb146a0a6e0fd9aced86, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -371,7 +371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1160030330760280240, guid: b310b4ef26a2ee94da02fa11ac1ac310, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.79
+      value: -1.44
       objectReference: {fileID: 0}
     - target: {fileID: 1160030330760280240, guid: b310b4ef26a2ee94da02fa11ac1ac310, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

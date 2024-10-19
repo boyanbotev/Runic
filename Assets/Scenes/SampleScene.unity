@@ -647,8 +647,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 4116161337284020574, guid: b373a362356475945aecfd1e46dd2f0a, type: 3}
   spawnRange: {x: -20, y: 20, z: -20, w: -20}
-  spawnTime: 1
+  spawnTime: 2.6
   player: {fileID: 2023696341}
+  names:
+  - nat
+  - pat
+  - tin
+  - pip
+  - pitt
 --- !u!4 &1923830932
 Transform:
   m_ObjectHideFlags: 0

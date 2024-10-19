@@ -76,7 +76,7 @@ public class EnemyController : MonoBehaviour
 
         if (word == this.word)
         {
-            Destroy(gameObject);
+            TakeDamage(1000);
         }
     }
 
@@ -108,7 +108,6 @@ public class EnemyController : MonoBehaviour
         }
         else if (effect)
         {
-            onDestroyed?.Invoke(gameObject);
             TakeDamage(effect.damage);
         }
 
