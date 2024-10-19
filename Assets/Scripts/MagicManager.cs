@@ -68,45 +68,45 @@ public class MagicManager : MonoBehaviour
                 SpawnEffectSingle(data);
             }
         }
+    }
 
-        void SpawnEffectSingle(EffectData data)
+    void SpawnEffectSingle(EffectData data)
+    {
+        GameObject effect = Instantiate(data.effectPrefab, player.position, Quaternion.identity);
+
+        if (data.isFacingClosestEnemy)
         {
-            GameObject effect = Instantiate(data.effectPrefab, player.position, Quaternion.identity);
-
-            if (data.isFacingClosestEnemy)
+            if (gameManager.enemies.Count != 0)
             {
-                if (gameManager.enemies.Count != 0)
-                {
-                    FaceClosestEnemy(effect);
-                }
+                FaceClosestEnemy(effect);
+            }
+        }
+    }
+
+    void FaceClosestEnemy(GameObject effect)
+    {
+        Vector3 closestEnemyPos = GetClosestEnemy().transform.position;
+        Vector3 dir = closestEnemyPos - player.position;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        effect.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+    }
+
+    GameObject GetClosestEnemy()
+    {
+        GameObject closestEnemy = null;
+        float closestDistance = float.MaxValue;
+
+        foreach (var enemy in gameManager.enemies)
+        {
+            float distance = Vector3.Distance(player.position, enemy.transform.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestEnemy = enemy;
             }
         }
 
-        void FaceClosestEnemy(GameObject effect)
-        {
-            Vector3 closestEnemyPos = GetClosestEnemy().transform.position;
-            Vector3 dir = closestEnemyPos - player.position;
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            effect.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
-        }
-
-        GameObject GetClosestEnemy()
-        {
-            GameObject closestEnemy = null;
-            float closestDistance = float.MaxValue;
-
-            foreach (var enemy in gameManager.enemies)
-            {
-                float distance = Vector3.Distance(player.position, enemy.transform.position);
-                if (distance < closestDistance)
-                {
-                    closestDistance = distance;
-                    closestEnemy = enemy;
-                }
-            }
-
-            return closestEnemy;
-        }
+        return closestEnemy;
     }
 
     public IEnumerator HoldButtonRoutine(DraggableLetter draggableLetter)
@@ -130,8 +130,4 @@ public class MagicManager : MonoBehaviour
         if (draggableLetter.state == ButtonState.Idle)
             StartCoroutine(HoldButtonRoutine(draggableLetter));
     }
-
-    // isaz: freeze enemies
-
-    // ansuz: show names of all objects in the scene
 }

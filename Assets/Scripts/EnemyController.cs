@@ -27,6 +27,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float health = 7;
     [SerializeField] private float freezeTime = 3f;
     private HealthBar healthBar;
+    private NameUI nameUI;
     private Color originalColor;
     private Color freezeColor = new Color(0.5f, 0.5f, 1f, 1f);
     private Vector2 knockBackVector;
@@ -37,12 +38,24 @@ public class EnemyController : MonoBehaviour
         state = EnemyState.Chasing;
         originalColor = GetComponent<SpriteRenderer>().color;
         healthBar = GetComponentInChildren<HealthBar>();
+        nameUI = GetComponentInChildren<NameUI>();
+    }
+
+    private void OnEnable()
+    {
+        UIManager.onWordSent += OnWordSent;
+    }
+
+    private void OnDisable()
+    {
+        UIManager.onWordSent -= OnWordSent;
     }
 
     private void Start()
     {
         healthBar.maxHealth = health;
         healthBar.UpdateHealth(health);
+        nameUI.UpdateName(word);
     }
 
     void FixedUpdate()
@@ -54,6 +67,16 @@ public class EnemyController : MonoBehaviour
         else if (state == EnemyState.KnockedBack)
         {
             MoveBack();
+        }
+    }
+
+    void OnWordSent(string word)
+    {
+        Debug.Log("Word sent: " + word + ", this.word:" + this.word);
+
+        if (word == this.word)
+        {
+            Destroy(gameObject);
         }
     }
 

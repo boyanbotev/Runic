@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine.UIElements;
 
 public class UIManager : MonoBehaviour
 {
+    public static event Action<string> onWordSent;
     [SerializeField] private float buttonHoldTime = 1;
 
     UIDocument uiDoc;
@@ -12,6 +14,9 @@ public class UIManager : MonoBehaviour
     VisualElement mainEl;
     VisualElement linesEl;
     VisualElement lettersEl;
+    VisualElement spellingTextBarEl;
+    VisualElement spellingTextButtonEl;
+    Label spellingTextLabel;
     MagicManager magicManager;
 
     private void OnEnable()
@@ -33,12 +38,16 @@ public class UIManager : MonoBehaviour
         mainEl = root.Q(className: "main");
         linesEl = root.Q(className: "writing-lines");
         lettersEl = root.Q(className: "letters");
+        spellingTextBarEl = root.Q(className: "spelling-text-bar");
+        spellingTextButtonEl = root.Q(className: "spelling-text-button");
 
         magicManager = FindObjectOfType<MagicManager>();
 
         Application.targetFrameRate = 60;
 
         CreateLetters();
+
+        CreateSpellingText();
     }
 
     void CreateLetters()
@@ -52,17 +61,26 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    void OnLetterSelect(DraggableLetter draggableLetter)
+    void CreateSpellingText()
     {
-        //if (draggableLetter.state == ButtonState.Idle)
-            //StartCoroutine(HoldButtonRoutine(draggableLetter));
+        spellingTextBarEl.Clear();
+        spellingTextLabel = new Label();
+        spellingTextBarEl.Add(spellingTextLabel);
+
+        spellingTextButtonEl.RegisterCallback<PointerDownEvent>(evt =>
+        {
+            onWordSent?.Invoke(spellingTextLabel.text);
+            spellingTextLabel.text = "";
+        });
+    }
+
+    void OnLetterSelect(DraggableLetter draggableLetter) {
+        spellingTextLabel.text += draggableLetter.value;
     }
 
     void CancelLetterHold(DraggableLetter draggableLetter)
     {
-        //StopCoroutine(HoldButtonRoutine(draggableLetter));
-        //Debug.Log("cancel hold");
-        //StopAllCoroutines();
+
     }
 
     public IEnumerator HoldButtonRoutine(DraggableLetter draggableLetter)
@@ -76,3 +94,19 @@ public class UIManager : MonoBehaviour
         }
     }
 }
+
+/*
+ * TODO:
+ * Implemented:
+ * hold letter to charge letter spell
+ * 
+ * Necessary:
+ * tap letter quickly to spell word
+ * - word is emitted by pressing a button, which sends the word, 
+ * whether it is correct or nonsense out as an event with string payload and resets the input area.
+ * - event will destroy all enemies with that name
+ *  
+ *  Nice to have:
+ *  joystick movement
+ *  cooldown or charging animation on the spells
+ */

@@ -1,7 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI/Runic.uss?fileID=7433441132597879392&amp;guid=fa1d16cfaed00fe4a890f32689ccecfd&amp;type=3#Cards" />
+    <Style src="project://database/Assets/UI/Runic.uss?fileID=7433441132597879392&amp;guid=edc148b20195e684892551cdf869493c&amp;type=3#Runic" />
     <ui:VisualElement class="main">
-        <ui:VisualElement class="writing-lines">
+        <ui:VisualElement class="writing-lines" />
+        <ui:VisualElement class="spelling-text">
+            <ui:VisualElement class="spelling-text-bar" />
+            <ui:VisualElement class="spelling-text-button" />
         </ui:VisualElement>
         <ui:VisualElement class="letters" />
     </ui:VisualElement>

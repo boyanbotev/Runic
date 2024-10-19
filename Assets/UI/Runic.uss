@@ -21,7 +21,6 @@
 .writing-line {
     align-items: center;
     justify-content: flex-end;
-
     border-radius: 10px;
     border-width: 2px;
     height: 80px;
@@ -38,15 +37,46 @@
 .draggable-letter {
     border-radius: 10px;
     border-width: 2px;
-    padding: 0px 20px 0px 20px;
+    padding: 0 20px 0 20px;
     background-color: white;
     margin-left: 2%;
     margin-right: 2%;
     justify-content: center;
-    align-items: center ;
+    align-items: center;
 }
 
 .draggable-letter Label {
     font-size: var(--font-size);
     -unity-text-align: middle-center;
-} 
+}
+
+.spelling-text {
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 200px;
+    height: var(--font-size);
+    margin: 20px;
+}
+
+.spelling-text-bar {
+    background-color: aliceblue;
+    width: 100px;
+    height: var(--font-size);
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.spelling-text-button {
+    height: var(--font-size);
+    width: var(--font-size);
+    border-radius: 10px;
+    background-color: aliceblue;
+    margin-left: 10px;
+    background-image: url('project://database/Assets/Images/send.jpg?fileID=2800000&guid=9428d66b484ad9c478b491aacfd5749e&type=3#send');
+}
+
+.spelling-text label {
+    font-size: var(--font-size);
+}

@@ -12,6 +12,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private Vector4 spawnRange;
     [SerializeField] private float spawnTime = 3;
     [SerializeField] Transform player;
+    [SerializeField] string[] names = { "nat", "pat", "tin" };
 
     void Start()
     {
@@ -28,6 +29,14 @@ public class SpawnManager : MonoBehaviour
 
         var enemy = Instantiate(enemyPrefab, spawnPosition, enemyPrefab.transform.rotation);
         onEnemySpawned?.Invoke(enemy);
-        enemy.GetComponent<EnemyController>().target = player;
+
+        var controller = enemy.GetComponent<EnemyController>();
+        controller.target = player;
+        controller.word = GetRandomName();
+    }
+
+    string GetRandomName()
+    {
+        return names[UnityEngine.Random.Range(0, names.Length)];
     }
 }
