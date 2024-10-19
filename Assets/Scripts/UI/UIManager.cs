@@ -85,9 +85,7 @@ public class UIManager : MonoBehaviour
 
     public IEnumerator HoldButtonRoutine(DraggableLetter draggableLetter)
     {
-        Debug.Log("start coroutine");
         yield return new WaitForSeconds(buttonHoldTime);
-        Debug.Log("reach end of coroutine");
         if (draggableLetter.state == ButtonState.Pressed)
         {
             magicManager.SpawnEffect(draggableLetter.value);
@@ -99,14 +97,11 @@ public class UIManager : MonoBehaviour
  * TODO:
  * Implemented:
  * hold letter to charge letter spell
- * 
- * Necessary:
  * tap letter quickly to spell word
- * - word is emitted by pressing a button, which sends the word, 
- * whether it is correct or nonsense out as an event with string payload and resets the input area.
- * - event will destroy all enemies with that name
- *  
+ * 
  *  Nice to have:
  *  joystick movement
  *  cooldown or charging animation on the spells
+ *  ansuz reveals names
+ *  nauthiz does something
  */

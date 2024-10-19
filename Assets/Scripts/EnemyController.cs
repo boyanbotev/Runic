@@ -72,8 +72,6 @@ public class EnemyController : MonoBehaviour
 
     void OnWordSent(string word)
     {
-        Debug.Log("Word sent: " + word + ", this.word:" + this.word);
-
         if (word == this.word)
         {
             TakeDamage(1000);
