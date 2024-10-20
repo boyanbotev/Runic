@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 public class EffectData
 {
@@ -9,18 +10,21 @@ public class EffectData
     public float holdButtonTime;
     public bool isFacingClosestEnemy;
     public int spawnCount;
+    public string letter;
 
-    public EffectData(GameObject effectPrefab, float holdButtonTime, bool isFacingClosestEnemy, int spawnCount)
+    public EffectData(GameObject effectPrefab, float holdButtonTime, bool isFacingClosestEnemy, int spawnCount, string letter)
     {
         this.effectPrefab = effectPrefab;
         this.holdButtonTime = holdButtonTime;
         this.isFacingClosestEnemy = isFacingClosestEnemy;
         this.spawnCount = spawnCount;
+        this.letter = letter;
     }
 }
 
 public class MagicManager : MonoBehaviour
 {
+    public static event Action<string> onEffectSpawn;
     [SerializeField] Transform player;
     [SerializeField] GameObject tiwazPrefab; // t
     [SerializeField] GameObject ansuzPrefab; // a
@@ -34,12 +38,12 @@ public class MagicManager : MonoBehaviour
 
     private void Awake()
     {
-        magicEffects.Add("t", new EffectData(tiwazPrefab, 0.8f, true, 1));
-        magicEffects.Add("a", new EffectData(ansuzPrefab, 1, false, 1));
-        magicEffects.Add("s", new EffectData(sowiloPrefab, 0.6f, false, 1));
-        magicEffects.Add("p", new EffectData(perthroPrefab, 0.3f, true, 3));
-        magicEffects.Add("n", new EffectData(naudizPrefab, 1, false, 1));
-        magicEffects.Add("i", new EffectData(isazPrefab, 0.7f, true, 1));
+        magicEffects.Add("t", new EffectData(tiwazPrefab, 0.8f, true, 1, "t"));
+        magicEffects.Add("a", new EffectData(ansuzPrefab, 1, false, 1, "a"));
+        magicEffects.Add("s", new EffectData(sowiloPrefab, 0.6f, false, 1, "s"));
+        magicEffects.Add("p", new EffectData(perthroPrefab, 0.3f, true, 3, "p"));
+        magicEffects.Add("n", new EffectData(naudizPrefab, 1, false, 1, "n"));
+        magicEffects.Add("i", new EffectData(isazPrefab, 0.7f, true, 1, "i"));
     }
 
     private void OnEnable()
@@ -72,6 +76,8 @@ public class MagicManager : MonoBehaviour
 
     void SpawnEffectSingle(EffectData data)
     {
+        onEffectSpawn?.Invoke(data.letter);
+
         GameObject effect = Instantiate(data.effectPrefab, player.position, Quaternion.identity);
 
         if (data.isFacingClosestEnemy)

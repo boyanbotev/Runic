@@ -44,11 +44,14 @@ public class EnemyController : MonoBehaviour
     private void OnEnable()
     {
         UIManager.onWordSent += OnWordSent;
+        MagicManager.onEffectSpawn += OnEffectSpawned;
+
     }
 
     private void OnDisable()
     {
         UIManager.onWordSent -= OnWordSent;
+        MagicManager.onEffectSpawn -= OnEffectSpawned;
     }
 
     private void Start()
@@ -76,6 +79,19 @@ public class EnemyController : MonoBehaviour
         {
             TakeDamage(1000);
         }
+    }
+
+    private void OnEffectSpawned(string letter)
+    {
+        if (letter == "a")
+        {
+            ShowName();
+        }
+    }
+
+    private void ShowName()
+    {
+        nameUI.Show();
     }
 
     void MoveToTarget()

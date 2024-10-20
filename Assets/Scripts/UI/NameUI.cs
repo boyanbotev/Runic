@@ -12,8 +12,17 @@ public class NameUI : MonoBehaviour
         nameText = GetComponent<TextMeshPro>();
     }
 
+    private void Start()
+    {
+        this.gameObject.SetActive(false);
+    }
     public void UpdateName(string name)
     {
         nameText.text = name;
+    }
+
+    public void Show()
+    {
+        this.gameObject.SetActive(true);
     }
 }
