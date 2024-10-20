@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,20 +7,24 @@ using static UnityEngine.GraphicsBuffer;
 enum PlayerState
 {
     Idle,
-    Moving
+    Moving,
 }
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed = 1f;
+    [SerializeField] private float dashSpeed = 3f;
     PlayerState playerState = PlayerState.Idle;
-    Vector2 moveDir;
+    Vector2 moveDir = Vector2.down;
+    Boolean isDashing = false;
 
     private void OnEnable()
     {
         JoystickManager.onMove += SetDirection;
         JoystickManager.onActivate += SetMoving;
         JoystickManager.onDeactivate += SetIdle;
+        MagicManager.onEffectSpawn += OnSpawnEffect;
+
     }
 
     private void OnDisable()
@@ -27,6 +32,7 @@ public class PlayerController : MonoBehaviour
         JoystickManager.onMove -= SetDirection;
         JoystickManager.onActivate -= SetMoving;
         JoystickManager.onDeactivate -= SetIdle;
+        MagicManager.onEffectSpawn -= OnSpawnEffect;
     }
 
     private void Update()
@@ -34,6 +40,14 @@ public class PlayerController : MonoBehaviour
         if (playerState == PlayerState.Moving)
         {
             Move();
+        }
+    }
+
+    void OnSpawnEffect(string letter)
+    {
+        if (letter == "n")
+        {
+            SetDash();
         }
     }
 
@@ -52,9 +66,33 @@ public class PlayerController : MonoBehaviour
         playerState = PlayerState.Moving;
     }
 
-    public void Move()
+    void SetDash()
     {
-        transform.Translate(moveDir * speed * Time.deltaTime);
+        isDashing = true;
+        playerState = PlayerState.Moving;
+        StartCoroutine(DashRoutine());
     }
 
+    public void Move()
+    {
+        var moveSpeed = isDashing ? dashSpeed : speed;
+        transform.Translate(moveDir * moveSpeed * Time.deltaTime);
+    }
+
+    IEnumerator DashRoutine()
+    {
+        yield return new WaitForSeconds(0.25f);
+        isDashing = false;
+
+        // check if mouse is in joystick head
+        if (FindObjectOfType<JoystickManager>().joystickState == JoystickState.Dragging)
+        {
+            playerState = PlayerState.Moving;
+        }
+        else
+        {
+            playerState = PlayerState.Idle;
+        }
+        
+    }
 }

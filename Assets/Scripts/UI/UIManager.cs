@@ -23,12 +23,14 @@ public class UIManager : MonoBehaviour
     {
         DraggableLetter.onSelect += OnLetterSelect;
         DraggableLetter.onRelease += CancelLetterHold;
+        MagicManager.onEffectSpawn += ClearSpellingText;
     }
 
     private void OnDisable()
     {
         DraggableLetter.onSelect -= OnLetterSelect;
         DraggableLetter.onRelease -= CancelLetterHold;
+        MagicManager.onEffectSpawn -= ClearSpellingText;
     }
 
     private void Awake()
@@ -71,6 +73,11 @@ public class UIManager : MonoBehaviour
             onWordSent?.Invoke(spellingTextLabel.text);
             spellingTextLabel.text = "";
         });
+    }
+
+    void ClearSpellingText(string letter)
+    {
+        spellingTextLabel.text = "";
     }
 
     void OnLetterSelect(DraggableLetter draggableLetter) {

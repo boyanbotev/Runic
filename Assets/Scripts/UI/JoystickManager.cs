@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-enum JoystickState
+public enum JoystickState
 {
     Idle,
     Dragging
@@ -21,7 +21,7 @@ public class JoystickManager : MonoBehaviour
     VisualElement joystickBg;
     Vector2 originalPos;
     Vector2 currentPos;
-    JoystickState joystickState = JoystickState.Idle;
+    public JoystickState joystickState = JoystickState.Idle;
 
     private void Awake()
     {

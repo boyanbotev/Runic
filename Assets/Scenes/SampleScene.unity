@@ -553,7 +553,7 @@ MonoBehaviour:
   ansuzPrefab: {fileID: 7743542038228952114, guid: c662b603ea5eb1841b99c9773274b2fd, type: 3}
   sowiloPrefab: {fileID: 5679761190642041175, guid: ca5d577f90b658c4fb058e0864d38fe3, type: 3}
   perthroPrefab: {fileID: 6164614806684692931, guid: a1d7aa8f4f25a45479b09cbdf39cb082, type: 3}
-  naudizPrefab: {fileID: 8128013257767509212, guid: d1fd70228ca677e4fae50863771f3cf3, type: 3}
+  naudizPrefab: {fileID: 5150390761917447246, guid: f335af765db99b2449916a6736fc98a1, type: 3}
   isazPrefab: {fileID: 5462901222406865590, guid: e4f9fb3c716c247459c1ff45bbbd916b, type: 3}
   gameManager: {fileID: 512974741}
 --- !u!4 &1084536409
@@ -615,6 +615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2099e07a87812246a791154c2e7fbd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  joystickState: 0
 --- !u!1 &1814021219
 GameObject:
   m_ObjectHideFlags: 0
@@ -814,6 +815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+  dashSpeed: 15
 --- !u!70 &2023696343
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
