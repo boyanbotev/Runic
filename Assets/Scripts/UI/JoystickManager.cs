@@ -90,8 +90,8 @@ public class JoystickManager : MonoBehaviour
         float elementHeight = joystickHead.resolvedStyle.height;
 
         var clampedPos = new Vector2(
-            Mathf.Clamp(pos.x, joystickBg.worldBound.x + elementWidth / 3, joystickBg.worldBound.x + joystickBg.resolvedStyle.width - elementWidth / 3),
-            Mathf.Clamp(pos.y, joystickBg.worldBound.y + elementHeight / 3, joystickBg.worldBound.y + joystickBg.resolvedStyle.height - elementHeight / 3)
+            Mathf.Clamp(pos.x, joystickBg.worldBound.x, joystickBg.worldBound.x + joystickBg.resolvedStyle.width),
+            Mathf.Clamp(pos.y, joystickBg.worldBound.y, joystickBg.worldBound.y + joystickBg.resolvedStyle.height)
         );
 
         var adjustedPos = new Vector2(

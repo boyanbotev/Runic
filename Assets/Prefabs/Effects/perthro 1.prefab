@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 0.8
-  damage: 7
-  knockbackForce: 29
+  damage: 3
+  knockbackForce: 4
 --- !u!1001 &7691713623072536713
 PrefabInstance:
   m_ObjectHideFlags: 0
