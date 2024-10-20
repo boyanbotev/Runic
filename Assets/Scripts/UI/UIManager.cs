@@ -101,12 +101,6 @@ public class UIManager : MonoBehaviour
 
 /*
  * TODO:
- * Implemented:
- * hold letter to charge letter spell
- * tap letter quickly to spell word
- * joystick movement
  * 
- *  Nice to have:
  *  cooldown or charging animation on the spells
- *  nauthiz dash
  */

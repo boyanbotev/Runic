@@ -19,8 +19,6 @@ public class DraggableLetter : VisualElement
     public Vector2 originalPos;
     public string value;
     public ButtonState state = ButtonState.Idle;
-
-
     private string draggableLetterClassName = "draggable-letter";
     private VisualElement bodyEl;
 
@@ -37,18 +35,21 @@ public class DraggableLetter : VisualElement
         {
             onSelect?.Invoke(this);
             state = ButtonState.Pressed;
+            AddToClassList("pressed");
         });
 
         RegisterCallback<PointerUpEvent>(evt =>
         {
             onRelease?.Invoke(this);
             state = ButtonState.Idle;
+            RemoveFromClassList("pressed");
         });
 
         RegisterCallback<PointerLeaveEvent>(evt =>
         {
             onRelease?.Invoke(this);
             state = ButtonState.Idle;
+            RemoveFromClassList("pressed");
         });
     }
 
