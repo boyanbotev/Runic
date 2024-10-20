@@ -80,3 +80,30 @@
 .spelling-text label {
     font-size: var(--font-size);
 }
+
+.joystick {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    margin: 20px;
+}
+
+.joystick-bg {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: rgba(180, 180, 180, 0.5);
+    position: absolute;
+}
+
+.joystick-head {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: lightgray;
+    position: absolute;
+    top: 30px;
+    left: 30px;
+}

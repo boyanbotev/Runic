@@ -46,7 +46,6 @@ public class UIManager : MonoBehaviour
         Application.targetFrameRate = 60;
 
         CreateLetters();
-
         CreateSpellingText();
     }
 
@@ -103,5 +102,5 @@ public class UIManager : MonoBehaviour
  *  joystick movement
  *  cooldown or charging animation on the spells
  *  ansuz reveals names
- *  nauthiz does something
+ *  nauthiz dash
  */

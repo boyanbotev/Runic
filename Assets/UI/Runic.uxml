@@ -7,5 +7,9 @@
             <ui:VisualElement class="spelling-text-button" />
         </ui:VisualElement>
         <ui:VisualElement class="letters" />
+        <ui:VisualElement class="joystick">
+            <ui:VisualElement class="joystick-bg" />
+            <ui:VisualElement class="joystick-head" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
