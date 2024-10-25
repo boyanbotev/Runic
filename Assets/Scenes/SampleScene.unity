@@ -616,18 +616,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - name: a
+  - name: a1
     audioClip: {fileID: 8300000, guid: 69272cc62f0ad4e4db5a268ac58104b1, type: 3}
-  - name: s
+  - name: s1
     audioClip: {fileID: 8300000, guid: 3202588bcb1439c40918b9d0e39b4300, type: 3}
-  - name: t
+  - name: t1
     audioClip: {fileID: 8300000, guid: a2092327a611f4e41993f20601408f88, type: 3}
-  - name: p
+  - name: p1
     audioClip: {fileID: 8300000, guid: b3fce3df831a27342803b6eebed78288, type: 3}
-  - name: i
+  - name: i1
     audioClip: {fileID: 8300000, guid: 9ef7e312b69f5f44594f5367112f0a79, type: 3}
-  - name: n
+  - name: n1
     audioClip: {fileID: 8300000, guid: c76c9d579c4585a499b76a7672abc296, type: 3}
+  - name: a
+    audioClip: {fileID: 8300000, guid: f0760b42001ccf94285140fcc160c03f, type: 3}
+  - name: i
+    audioClip: {fileID: 8300000, guid: f9e7cdb2abdb6b247bd6250770cd5a46, type: 3}
+  - name: n
+    audioClip: {fileID: 8300000, guid: e99f449f3c6f1ea409eea90a62bdf891, type: 3}
+  - name: s
+    audioClip: {fileID: 8300000, guid: 75be4bfdc0728ec4a866255aac2c1388, type: 3}
+  - name: t
+    audioClip: {fileID: 8300000, guid: e250c2b49f082c447803a04d3f5a64bb, type: 3}
+  - name: p
+    audioClip: {fileID: 8300000, guid: 0bead6675facf854cb0da01557f99e7b, type: 3}
 --- !u!1 &1699256822
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,11 +12,18 @@ public class AudioManager : MonoBehaviour
     private void OnEnable()
     {
         DraggableLetter.onSelect += PlayLetterSound;
+        MagicManager.onEffectSpawn += PlayEffectSpawnSound;
     }
 
     private void OnDisable()
     {
         DraggableLetter.onSelect -= PlayLetterSound;
+        MagicManager.onEffectSpawn -= PlayEffectSpawnSound;
+    }
+
+    void PlayEffectSpawnSound(string letter)
+    {
+        PlaySound(letter + 1);
     }
 
     void PlayLetterSound(DraggableLetter letter)
