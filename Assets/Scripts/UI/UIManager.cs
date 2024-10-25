@@ -7,7 +7,9 @@ using UnityEngine.UIElements;
 public class UIManager : MonoBehaviour
 {
     public static event Action<string> onWordSent;
+    public bool hasSpelling = true;
     [SerializeField] private float buttonHoldTime = 1;
+    [SerializeField] private string[] letters = { "s", "a", "t", "p", "i", "n" };
 
     UIDocument uiDoc;
     VisualElement root;
@@ -48,13 +50,20 @@ public class UIManager : MonoBehaviour
         Application.targetFrameRate = 60;
 
         CreateLetters();
-        CreateSpellingText();
+
+        if (hasSpelling)
+        {
+            CreateSpellingText();
+        }
+        else
+        {
+            spellingTextBarEl.style.display = DisplayStyle.None;
+            spellingTextButtonEl.style.display = DisplayStyle.None;
+        }
     }
 
     void CreateLetters()
     {
-        string[] letters = { "s", "a", "t", "p", "i", "n" };
-
         foreach (string letter in letters)
         {
             DraggableLetter draggableLetter = new(letter, mainEl);
@@ -70,6 +79,8 @@ public class UIManager : MonoBehaviour
 
         spellingTextButtonEl.RegisterCallback<PointerDownEvent>(evt =>
         {
+            if (!hasSpelling) return;
+
             onWordSent?.Invoke(spellingTextLabel.text);
             spellingTextLabel.text = "";
         });
@@ -77,11 +88,17 @@ public class UIManager : MonoBehaviour
 
     void ClearSpellingText(string letter)
     {
-        spellingTextLabel.text = "";
+        if (hasSpelling)
+        {
+            spellingTextLabel.text = "";
+        }
     }
 
     void OnLetterSelect(DraggableLetter draggableLetter) {
-        spellingTextLabel.text += draggableLetter.value;
+        if (hasSpelling)
+        {
+            spellingTextLabel.text += draggableLetter.value;
+        }
     }
 
     void CancelLetterHold(DraggableLetter draggableLetter)
