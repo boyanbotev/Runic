@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
         EnemyController.onDestroyed += OnEnemyDestroyed;
         SpawnManager.onEnemySpawned += OnEnemySpawned;
 
+        InvokeRepeating("EvaluateGame", 3, 1);
     }
 
     private void OnDisable()
@@ -35,5 +36,13 @@ public class GameManager : MonoBehaviour
     void GameOver()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    void EvaluateGame()
+    {
+        if (enemies.Count == 0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 }
