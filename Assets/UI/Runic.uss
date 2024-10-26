@@ -89,25 +89,25 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     margin: 20px;
 }
 
 .joystick-bg {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     background-color: rgba(180, 180, 180, 0.5);
     position: absolute;
 }
 
 .joystick-head {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     background-color: lightgray;
     position: absolute;
-    top: 30px;
-    left: 30px;
+    top: 45px;
+    left: 45px;
 }
