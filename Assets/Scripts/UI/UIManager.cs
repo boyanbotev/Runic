@@ -19,19 +19,16 @@ public class UIManager : MonoBehaviour
     VisualElement spellingTextBarEl;
     VisualElement spellingTextButtonEl;
     Label spellingTextLabel;
-    MagicManager magicManager;
 
     private void OnEnable()
     {
         DraggableLetter.onSelect += OnLetterSelect;
-        DraggableLetter.onRelease += CancelLetterHold;
         MagicManager.onEffectSpawn += ClearSpellingText;
     }
 
     private void OnDisable()
     {
         DraggableLetter.onSelect -= OnLetterSelect;
-        DraggableLetter.onRelease -= CancelLetterHold;
         MagicManager.onEffectSpawn -= ClearSpellingText;
     }
 
@@ -44,8 +41,6 @@ public class UIManager : MonoBehaviour
         lettersEl = root.Q(className: "letters");
         spellingTextBarEl = root.Q(className: "spelling-text-bar");
         spellingTextButtonEl = root.Q(className: "spelling-text-button");
-
-        magicManager = FindObjectOfType<MagicManager>();
 
         Application.targetFrameRate = 60;
 
@@ -100,24 +95,4 @@ public class UIManager : MonoBehaviour
             spellingTextLabel.text += draggableLetter.value;
         }
     }
-
-    void CancelLetterHold(DraggableLetter draggableLetter)
-    {
-
-    }
-
-    public IEnumerator HoldButtonRoutine(DraggableLetter draggableLetter)
-    {
-        yield return new WaitForSeconds(buttonHoldTime);
-        if (draggableLetter.state == ButtonState.Pressed)
-        {
-            magicManager.SpawnEffect(draggableLetter.value);
-        }
-    }
 }
-
-/*
- * TODO:
- * 
- *  cooldown or charging animation on the spells
- */

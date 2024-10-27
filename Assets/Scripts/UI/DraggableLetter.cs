@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -19,6 +20,7 @@ public class DraggableLetter : VisualElement
     public Vector2 originalPos;
     public string value;
     public ButtonState state = ButtonState.Idle;
+    public Coroutine holdButtonCoroutine;
     private string draggableLetterClassName = "draggable-letter";
     private VisualElement bodyEl;
 

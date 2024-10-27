@@ -35,6 +35,7 @@ public class MagicManager : MonoBehaviour
 
     Dictionary<string, EffectData> magicEffects = new Dictionary<string, EffectData>();
     [SerializeField] GameManager gameManager;
+    private string lastPressedLetter;
 
     private void Awake()
     {
@@ -71,6 +72,8 @@ public class MagicManager : MonoBehaviour
             {
                 SpawnEffectSingle(data);
             }
+
+            lastPressedLetter = letter;
         }
     }
 
@@ -120,7 +123,7 @@ public class MagicManager : MonoBehaviour
         EffectData effectData = magicEffects[draggableLetter.value];
         yield return new WaitForSeconds(effectData.holdButtonTime);
 
-        if (draggableLetter.state == ButtonState.Pressed)
+        if (draggableLetter.ClassListContains("pressed"))
         {
             SpawnEffect(draggableLetter.value);
         }
@@ -128,12 +131,15 @@ public class MagicManager : MonoBehaviour
 
     void CancelLetterHold(DraggableLetter draggableLetter)
     {
-        StopAllCoroutines();
+        StopCoroutine(draggableLetter.holdButtonCoroutine);
     }
 
     void OnLetterSelect(DraggableLetter draggableLetter)
     {
-        if (draggableLetter.state == ButtonState.Idle)
-            StartCoroutine(HoldButtonRoutine(draggableLetter));
+        if (draggableLetter.state == ButtonState.Idle || draggableLetter.value != lastPressedLetter)
+        {
+            var routine = StartCoroutine(HoldButtonRoutine(draggableLetter));
+            draggableLetter.holdButtonCoroutine = routine;
+        }
     }
 }
